@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {browserHistory} from 'react-router';
-import {AUTH_USER, AUTH_ERROR} from './types';
+import {AUTH_USER, UNAUTH_USER, AUTH_ERROR} from './types';
 
 const ROOT_URL='http://kgdevel.in:3000';
 const SIGNIN_URL=`${ROOT_URL}/api/signin`;
@@ -41,7 +41,14 @@ export function authError(error){
 
 
 
+export function signoutUser() {
 
+ localStorage.removeItem('token');
+  
+  return {
+    type: UNAUTH_USER
+  };
+}
 
 
 
