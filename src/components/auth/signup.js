@@ -5,7 +5,7 @@ import * as actions from '../../actions';
 class Signup extends Component {
   render() {
 
-    const { handleSubmit, fields: {email, password, password_confirmation}} = this.props;
+    const { handleSubmit, fields: {email, password, passwordConfirmation}} = this.props;
 
     return(
         <form action="">
@@ -16,10 +16,11 @@ class Signup extends Component {
           <fieldset className="form-group">
             <label>Password:</label>
             <input type="password" className="form-control" {...password} />
+            {password.touched && password.error && <div className="error">{password.error}</div>}
           </fieldset>
           <fieldset className="form-group">
             <label>Confirm Password:</label>
-            <input type="password" className="form-control" {...password_confirmation} />
+            <input type="password" className="form-control" {...passwordConfirmation} />
           </fieldset>
           <button type="submit" className="btn btn-primary">Sign up</button>
         </form>
@@ -28,9 +29,22 @@ class Signup extends Component {
   }
 }
 
+
+function validateForm(formProps) {
+  const errors = {};
+
+  if (formProps.password != formProps.passwordConfirmation) {
+    errors.password = "Password must match";
+  } 
+
+  return errors;
+}
+
+
 export default reduxForm({
   form: "signup",
-  fields: ["email", "password", "password_confirmation"]
+  fields: ["email", "password", "passwordConfirmation"],
+  validate: validateForm
 })(Signup);
 
 
