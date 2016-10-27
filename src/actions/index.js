@@ -4,7 +4,7 @@ import {AUTH_USER, UNAUTH_USER, AUTH_ERROR} from './types';
 
 const ROOT_URL='http://kgdevel.in:3000';
 const SIGNIN_URL=`${ROOT_URL}/api/signin`;
-const SIGNIN_URL1=`${ROOT_URL}/api/signin?email=kamalkgarg@gmail.com&password=kamal@123`;
+const SIGNUP_URL=`${ROOT_URL}/api/signup`;
 
 export function signinUser({ email, password }) {
   return function(dispatch) {
@@ -30,6 +30,21 @@ export function signinUser({ email, password }) {
   }
 }
 
+export function signupUser({email, password}){
+  return function(dispatch){
+    axios.post(SIGNUP_URL, {email, password})
+      .then(response => {
+        dispatch({type: AUTH_USER});
+        localStorage.setItem('token',response.data.auth_token);
+        browserHistory.push('/feature');
+      })
+      .catch(response => {
+        console.log(response);
+        dispatch(authError(response.data.error));
+      });
+    ;
+  }
+}
 
 
 export function authError(error){
