@@ -12,6 +12,7 @@ class Signup extends Component {
           <fieldset className="form-group">
             <label>Email:</label>
             <input className="form-control" {...email} />
+            {email.touched && email.error && <div className="error">{email.error}</div>}
           </fieldset>
           <fieldset className="form-group">
             <label>Password:</label>
@@ -21,6 +22,7 @@ class Signup extends Component {
           <fieldset className="form-group">
             <label>Confirm Password:</label>
             <input type="password" className="form-control" {...passwordConfirmation} />
+            {passwordConfirmation.touched && passwordConfirmation.error && <div className="error">{passwordConfirmation.error}</div>}
           </fieldset>
           <button type="submit" className="btn btn-primary">Sign up</button>
         </form>
@@ -32,6 +34,18 @@ class Signup extends Component {
 
 function validateForm(formProps) {
   const errors = {};
+
+  if (!formProps.email) {
+    errors.email = "Please enter an email";
+  }
+
+  if (!formProps.password) {
+    errors.password = "Please enter an password";
+  }
+
+  if (!formProps.passwordConfirmation) {
+    errors.passwordConfirmation = "Please enter an passwordConfirmation";
+  }
 
   if (formProps.password != formProps.passwordConfirmation) {
     errors.password = "Password must match";
