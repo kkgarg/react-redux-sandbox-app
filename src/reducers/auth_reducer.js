@@ -1,4 +1,4 @@
-import { AUTH_USER, UNAUTH_USER, AUTH_ERROR } from '../actions/types.js';
+import { AUTH_USER, UNAUTH_USER, AUTH_ERROR, FETCH_USER } from '../actions/types.js';
 
 export default function(state={}, action){
   switch(action.type) {
@@ -8,6 +8,8 @@ export default function(state={}, action){
       return { ...state, authenticated: false, error: ""};
     case AUTH_ERROR:
       return { ...state, error: action.payload }
+    case FETCH_USER:
+      return {...state, message: `Welcome ${action.payload.user.email}`}
   }
   return state;
 }
