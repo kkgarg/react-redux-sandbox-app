@@ -5,6 +5,7 @@ import {AUTH_USER, UNAUTH_USER, AUTH_ERROR} from './types';
 const ROOT_URL='http://kgdevel.in:3000';
 const SIGNIN_URL=`${ROOT_URL}/api/signin`;
 const SIGNUP_URL=`${ROOT_URL}/api/signup`;
+const DASHBOARD_URL=`${ROOT_URL}/api/users/dashboard`;
 
 export function signinUser({ email, password }) {
   return function(dispatch) {
@@ -66,4 +67,17 @@ export function signoutUser() {
 }
 
 
+export function fetchMessage() {
+  return function(dispatch) {
+    axios.get(DASHBOARD_URL,{
+      headers: {authorization: localStorage.getItem('token')}
+     })
+     .then( response => {
+        console.log(response);
+     })
+     .catch (response => {
+        console.log(response);
+     });
+  }
+}
 
